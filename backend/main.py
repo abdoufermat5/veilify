@@ -10,7 +10,10 @@ app = FastAPI()
 
 # Set up CORS
 origins = [
-    "*",
+    "http://localhost:3000",  # React app
+    "http://localhost:8000",  # FastAPI server (if needed)
+    # you can add more origins if required
+    "https://veilify.vercel.app/"
 ]
 
 app.add_middleware(
@@ -21,6 +24,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/")
+async def root():
+    return {"message": "Hello welcome to Veilify"}
 
 @app.post("/upload/")
 async def upload_image(file: UploadFile = File(...), blur_coordinates: str = Form(...)):
