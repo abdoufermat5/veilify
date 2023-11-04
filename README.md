@@ -56,7 +56,7 @@ The `--reload` flag enables hot reloading during development.
 Navigate to the frontend directory and install the necessary Node.js packages:
 
 ```bash
-cd ../client-app
+cd ../frontend
 npm install # or "yarn install" if you are using yarn
 ```
 
