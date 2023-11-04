@@ -1,0 +1,47 @@
+/* BlurModal.css */
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.modal-content {
+    background-color: #899e9b;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(233, 231, 231, 0.3);
+    width: 80%;
+    height: 80%;
+    max-width: 800px;
+    position: relative;
+    transition: transform 0.3s, opacity 0.3s;
+    transform: scale(0.9);
+    opacity: 0.9;
+}
+
+.modal[aria-hidden="false"] .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f5f5f5;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.close-button:hover {
+    background-color: #e5e5e5;
+}

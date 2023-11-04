@@ -1,0 +1,140 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Arial", sans-serif;
+}
+
+.App-header {
+  font-size: 4.5rem;
+  text-align: center;
+  font-weight: bold;
+  color: #0077b6;
+  text-shadow: 2px 2px 8px rgba(235, 235, 235, 0.2);
+}
+
+.App-description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.App-description .content-desc {
+  border: 0.005rem solid rgb(168, 157, 157);
+  padding: 10px;
+  text-align: center;
+}
+.dropzone {
+  border: 3px dashed #ddd;
+  border-radius: 4px;
+  padding: 50px;
+  width: 400px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropzone:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.images-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.original-image,
+.blurred-image {
+  max-width: 45%;
+  max-height: 600px;
+  border-radius: 10px;
+}
+
+.image-and-download {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Style the link inside the button to take the full size of the button */
+.download-link {
+  display: block;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.download-button {
+  margin-top: 20px; /* Space from the image */
+  width: 50%; /* Make the button full width */
+}
+
+.App-footer {
+  background-color: black;
+  display: flex;
+  gap: 10px 20px;
+  position: fixed;
+  bottom: 0px;
+  align-self: center;
+  color: #ddd;
+  padding: 10px;
+  width: 100%;
+}
+
+.App-footer a {
+  color: #0077b6;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.App-footer a:hover {
+  color: #005494;
+}
+
+/* Add responsive meta tag in your HTML */
+@media only screen and (max-width: 768px) {
+  /* Adjust the font size for smaller screens */
+  .App-header {
+    font-size: 2.5rem;
+  }
+
+  .dropzone {
+    width: 90%;
+    padding: 30px;
+    margin: 10px;
+  }
+
+  .images-container {
+    flex-direction: column;
+    margin-bottom: 120px;
+  }
+
+  /* Adjust image styles for smaller screens */
+  .original-image,
+  .blurred-image {
+    max-width: 90%;
+    height: auto;
+  }
+
+  .download-link,
+  .download-button {
+    width: 100%; /* Full width of parent */
+  }
+
+  /* Footer styling for mobile */
+  .App-footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}
