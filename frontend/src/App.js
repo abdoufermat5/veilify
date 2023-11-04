@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import BlurModal from "./components/BlurModal";
+import { Modal } from "react-bootstrap";
+import BlurTool from "./components/BlurTool";
 import Button from "@material-ui/core/Button";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [image, setImage] = useState(null);
@@ -14,6 +16,8 @@ function App() {
     setImage(null);
     setBlurredImage(null);
   };
+
+  const handleClose = () => setModalOpen(false);
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -50,13 +54,31 @@ function App() {
           </div>
         ) : (
           <div className="images-container">
-            <img alt="Original Image" src={image} className="original-image" />
-            <BlurModal
-              open={isModalOpen}
+            <img
+              alt="Original Image"
               src={image}
-              onBlurredImage={setBlurredImage}
-              onClose={() => setModalOpen(false)}
+              onClick={() => setModalOpen(true)}
+              className="original-image"
             />
+            <Modal
+              show={isModalOpen}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Crop areas to black out</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <BlurTool
+                  src={image}
+                  onBlurredImage={setBlurredImage}
+                  onClose={handleClose}
+                />
+              </Modal.Body>
+            </Modal>
+            );
             {blurredImage && (
               <div className="image-and-download">
                 <img
