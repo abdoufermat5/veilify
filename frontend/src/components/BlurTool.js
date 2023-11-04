@@ -55,7 +55,7 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
 
     try {
       const response = await axios.post(
-        "https://1pjrb19k03.execute-api.us-east-1.amazonaws.com/Dev/upload",
+        "https://6ogxk9sbfa.execute-api.us-east-1.amazonaws.com/dev/upload",
         formData,
         {
           onUploadProgress: (progressEvent) => {
