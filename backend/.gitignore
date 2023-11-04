@@ -286,4 +286,6 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+/vuelify_deployment_package
+
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm

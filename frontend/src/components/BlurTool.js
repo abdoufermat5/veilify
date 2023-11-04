@@ -13,15 +13,10 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [maxCropHeight, setMaxCropHeight] = useState(0);
-  const [maxCropWidth, setMaxCropWidth] = useState(0);
 
   const handleCropperReady = () => {
     const imageElement = cropperRef?.current;
     const cropper = imageElement?.cropper;
-
-    setMaxCropHeight(cropper.getCanvasData().naturalHeight);
-    setMaxCropWidth(cropper.getCanvasData().naturalWidth);
   };
 
   const handleZoom = (event) => {
@@ -60,7 +55,7 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/upload/",
+        "https://1pjrb19k03.execute-api.us-east-1.amazonaws.com/Dev/upload",
         formData,
         {
           onUploadProgress: (progressEvent) => {
@@ -104,10 +99,9 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
                 ready={handleCropperReady}
                 zoom={handleZoom}
                 viewMode={1}
-                cropBoxMinWidth={0} // 0 means no restriction
-                cropBoxMaxWidth={maxCropWidth} // Infinity means no restriction
-                cropBoxMinHeight={50} // Minimum height of 50 pixels for the crop box, adjust as needed
-                cropBoxMaxHeight={maxCropHeight}
+                autoCropArea={0.5}
+                minCropBoxHeight={50} 
+
               />
               <div className="btn-container">
                 <Button

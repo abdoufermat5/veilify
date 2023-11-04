@@ -10,9 +10,7 @@ app = FastAPI()
 
 # Set up CORS
 origins = [
-    "http://localhost:3000",  # React app
-    "http://localhost:8000",  # FastAPI server (if needed)
-    # you can add more origins if required
+    "*",
 ]
 
 app.add_middleware(
