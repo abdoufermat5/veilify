@@ -1,0 +1,23 @@
+.tutorial-step {
+  height: 300px; /* Adjust the height as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ad455b; /* Your theme color */
+  color: rgb(245, 245, 245);
+  text-shadow: 2px 2px 4px rgba(156, 83, 83, 0.5);
+  border-radius: 15px; /* Optional: for rounded corners */
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.tutorial-step h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.tutorial-step p {
+  font-size: 1.2rem;
+}

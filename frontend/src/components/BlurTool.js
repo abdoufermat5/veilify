@@ -29,6 +29,7 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
       event.preventDefault();  // Prevent the zoom action
     }
   };
+
   
 
   const getCropData = () => {
@@ -79,6 +80,8 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
     }
     setLoading(false);
   };
+
+  
 
   return (
     <div className="blur-tool-container">

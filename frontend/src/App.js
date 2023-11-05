@@ -1,19 +1,20 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Modal } from "react-bootstrap";
 import BlurTool from "./components/BlurTool";
+import Tutorial from "./components/Tutorial";
 import Button from "@material-ui/core/Button";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { ToastContainer, toast } from "react-toastify";
 import veilifyIcon from "./assets/veilify.jpeg";
-import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [image, setImage] = useState(null);
   const [blurredImage, setBlurredImage] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const resetImage = () => {
     setImage(null);
@@ -85,9 +86,22 @@ function App() {
     multiple: false,
   });
 
+  const closeTutorial = () => {
+    setShowTutorial(false);
+    localStorage.setItem("tutorialShown", "true");
+  };
+
+  useEffect(() => {
+    const tutorialShown = localStorage.getItem("tutorialShown");
+    if (!tutorialShown) {
+      setShowTutorial(true);
+    }
+  }, []);
+
   return (
     <>
       <ToastContainer />
+      {showTutorial && <Tutorial show={showTutorial} onClose={closeTutorial} />}
       <header className="App-header">
         <img src={veilifyIcon} alt="Veilify Icon" className="veilify-icon" />
         Veilify
@@ -104,7 +118,9 @@ function App() {
         {!image ? (
           <div {...getRootProps()} className="dropzone">
             <input {...getInputProps()} />
-            <p className="animated-text">Drag & drop an image here, or click to select one</p>
+            <p className="animated-text">
+              Drag & drop an image here, or click to select one
+            </p>
           </div>
         ) : (
           <div className="images-container">
