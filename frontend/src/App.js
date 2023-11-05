@@ -4,6 +4,8 @@ import { Modal } from "react-bootstrap";
 import BlurTool from "./components/BlurTool";
 import Button from "@material-ui/core/Button";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -19,24 +21,72 @@ function App() {
 
   const handleClose = () => setModalOpen(false);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImage(reader.result);
-      setModalOpen(true); // <-- Open the modal when image is loaded
-    };
-    reader.readAsDataURL(file);
+  const onDropRejected = useCallback((fileRejections) => {
+    setModalOpen(false);
+    // Only show the warning for the first rejected file
+    const { errors } = fileRejections[0];
+    errors.forEach((error) => {
+      if (error.code === "file-invalid-type") {
+        toast.warn("Only image files are accepted!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else if (error.code === "file-too-large") {
+        toast.warn("File is too large! Compress it then come back", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    });
   }, []);
+
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (!file.type.startsWith("image/")) {
+        // Manually trigger the rejection handler if the file is not an image
+        onDropRejected([{ file, errors: [{ code: "file-invalid-type" }] }]);
+        return;
+      }
+
+      const maxSize = 10000000; // Your size limit here (10MB example)
+      if (file.size > maxSize) {
+        // Manually trigger the rejection handler if the file is too large
+        onDropRejected([{ file, errors: [{ code: "file-too-large" }] }]);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result);
+        setModalOpen(true); // <-- Open the modal when image is loaded
+      };
+      reader.readAsDataURL(file);
+    },
+    [onDropRejected]
+  );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
+    onDropRejected,
     accept: "image/*",
+    maxSize: 10000000, // 10mb max
     multiple: false,
   });
 
   return (
     <>
+      <ToastContainer />
       <header className="App-header">Veilify</header>
       <div className="App-description">
         <div className="content-desc">
@@ -78,7 +128,7 @@ function App() {
                 />
               </Modal.Body>
             </Modal>
-            );
+
             {blurredImage && (
               <div className="image-and-download">
                 <img
