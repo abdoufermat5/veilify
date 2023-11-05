@@ -100,7 +100,7 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
                 zoom={handleZoom}
                 viewMode={1}
                 autoCropArea={0.5}
-                minCropBoxHeight={50} 
+                minCropBoxHeight={0} 
 
               />
               <div className="btn-container">
