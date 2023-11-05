@@ -1,13 +1,14 @@
 import React, { useRef, useState } from "react";
 import Cropper from "react-cropper";
-import "cropperjs/dist/cropper.css";
 import axios from "axios";
 import { LinearProgress, Button } from "@material-ui/core";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "./BlurTool.css";
 
-const apiURL = process.env.REACT_APP_ENV === 'dev' ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+const apiURL =
+  process.env.REACT_APP_ENV === "dev"
+    ? process.env.REACT_APP_DEV_URL
+    : process.env.REACT_APP_PROD_URL;
 
 const BlurTool = ({ src, onBlurredImage, onClose }) => {
   const cropperRef = useRef(null);
@@ -16,23 +17,16 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
   const [submitted, setSubmitted] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  const handleCropperReady = () => {
-    const imageElement = cropperRef?.current;
-    const cropper = imageElement?.cropper;
-  };
-
   const handleZoom = (event) => {
     const imageElement = cropperRef?.current;
     const cropper = imageElement?.cropper;
-  
+
     if (event.detail.ratio > 1) {
       // If the image size is greater than its natural size
       cropper.zoomTo(1);
-      event.preventDefault();  // Prevent the zoom action
+      event.preventDefault(); // Prevent the zoom action
     }
   };
-
-  
 
   const getCropData = () => {
     const imageElement = cropperRef?.current;
@@ -57,22 +51,17 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
     formData.append("blur_coordinates", JSON.stringify(allCrops));
 
     try {
-      console.log("ENVIRONMENT",console.log(process.env))
-      const response = await axios.post(
-        apiURL + "/upload",
-        formData,
-        {
-          onUploadProgress: (progressEvent) => {
-            let percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setUploadProgress(percentCompleted);
-          },
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(apiURL + "/upload", formData, {
+        onUploadProgress: (progressEvent) => {
+          let percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadProgress(percentCompleted);
+        },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       onBlurredImage(`data:image/png;base64,${response.data.blurred_image}`);
       setSubmitted(true);
       onClose();
@@ -83,8 +72,6 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
     }
     setLoading(false);
   };
-
-  
 
   return (
     <div className="blur-tool-container">
@@ -102,12 +89,10 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
                 background={false}
                 dragMode="move"
                 cropBoxResizable={true}
-                ready={handleCropperReady}
                 zoom={handleZoom}
                 viewMode={1}
                 autoCropArea={0.5}
-                minCropBoxHeight={0} 
-
+                minCropBoxHeight={0}
               />
               <div className="btn-container">
                 <Button

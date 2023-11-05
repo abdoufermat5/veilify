@@ -18,11 +18,6 @@ function App() {
 
   const [showTutorial, setShowTutorial] = useState(false);
 
-  const resetImage = () => {
-    setImage(null);
-    setBlurredImage(null);
-  };
-
   const handleClose = () => setModalOpen(false);
 
   const onDropRejected = useCallback((fileRejections) => {
@@ -127,7 +122,7 @@ function App() {
         ) : (
           <div className="images-container">
             <img
-              alt="Original Image"
+              alt="Original"
               src={image}
               onClick={() => setModalOpen(true)}
               className="original-image"
@@ -154,7 +149,7 @@ function App() {
             {blurredImage && (
               <div className="image-and-download">
                 <img
-                  alt="Blacked Out Image"
+                  alt="Blacked Out"
                   src={blurredImage}
                   className="blurred-image"
                 />
