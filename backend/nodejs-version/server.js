@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const formidable = require("formidable");
 const sharp = require("sharp");
-const fs = require('fs');
+const fs = require("fs");
 const app = express();
 
 // Allow from anywhere
@@ -21,7 +21,6 @@ app.options("*", cors(corsOptions));
 
 // Then use it before your routes are set up
 app.use(cors(corsOptions));
-
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello welcome to Veilify" });
@@ -68,10 +67,10 @@ app.post("/upload", (req, res) => {
       // Load the image using Sharp with the file path from Formidable
       let image = sharp(imageFilePath);
 
-      // Replace the selected areas with black color
-      for (const coords of blur_coordinates) {
+      // Create an array to hold all the composite operations
+      const compositeOperations = blur_coordinates.map((coords) => {
         const [x, y, w, h] = coords;
-        const blackOverlay = await sharp({
+        return sharp({
           create: {
             width: w,
             height: h,
@@ -80,13 +79,21 @@ app.post("/upload", (req, res) => {
           },
         })
           .png()
-          .toBuffer();
+          .toBuffer()
+          .then((blackOverlay) => ({
+            input: blackOverlay,
+            top: y,
+            left: x,
+          }));
+      });
 
-        image = image.composite([{ input: blackOverlay, top: y, left: x }]);
-      }
+      // Wait for all composite operations to finish
+      const compositeImages = await Promise.all(compositeOperations);
 
-      const modifiedImageBuffer = await image.toBuffer();
-      const base64Encoded = modifiedImageBuffer.toString("base64");
+      // Apply all composite operations to the image
+      image = await image.composite(compositeImages).toBuffer();
+
+      const base64Encoded = image.toString("base64");
 
       res.json({
         filename: files.file.originalFilename,
