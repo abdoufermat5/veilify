@@ -55,7 +55,7 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/upload",
+        "https://veilify-backend.vercel.app/upload",
         formData,
         {
           onUploadProgress: (progressEvent) => {
