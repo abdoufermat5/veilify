@@ -7,6 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./BlurTool.css";
 
+const apiURL = process.env.REACT_APP_ENV === 'dev' ? process.env.REACT_APP_DEV_URL : process.env.REACT_APP_PROD_URL;
+
 const BlurTool = ({ src, onBlurredImage, onClose }) => {
   const cropperRef = useRef(null);
   const [allCrops, setAllCrops] = useState([]);
@@ -55,8 +57,9 @@ const BlurTool = ({ src, onBlurredImage, onClose }) => {
     formData.append("blur_coordinates", JSON.stringify(allCrops));
 
     try {
+      console.log("ENVIRONMENT",console.log(process.env))
       const response = await axios.post(
-        "https://veilify-backend.vercel.app/upload",
+        apiURL + "/upload",
         formData,
         {
           onUploadProgress: (progressEvent) => {
