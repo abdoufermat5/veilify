@@ -5,6 +5,7 @@ import BlurTool from "./components/BlurTool";
 import Button from "@material-ui/core/Button";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { ToastContainer, toast } from "react-toastify";
+import veilifyIcon from "./assets/veilify.jpeg";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -87,7 +88,10 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <header className="App-header">Veilify</header>
+      <header className="App-header">
+        <img src={veilifyIcon} alt="Veilify Icon" className="veilify-icon" />
+        Veilify
+      </header>
       <div className="App-description">
         <div className="content-desc">
           <p>
@@ -100,7 +104,7 @@ function App() {
         {!image ? (
           <div {...getRootProps()} className="dropzone">
             <input {...getInputProps()} />
-            <p>Drag & drop an image here, or click to select one</p>
+            <p className="animated-text">Drag & drop an image here, or click to select one</p>
           </div>
         ) : (
           <div className="images-container">
