@@ -39,8 +39,13 @@ cd veilify
 Navigate to the backend directory and install the required Python packages:
 
 ```bash
-cd backend
+cd backend/fastapi-version
 pip install -r requirements.txt
+```
+OR
+```bash
+cd backend/nodejs-version
+npm install
 ```
 
 To run the FastAPI server, execute:
@@ -48,8 +53,16 @@ To run the FastAPI server, execute:
 ```bash
 uvicorn main:app --reload
 ```
-
 The `--reload` flag enables hot reloading during development.
+
+
+OR
+
+To run the NodeJS server, execute:
+
+```bash
+npm start
+```
 
 #### Setting up the Frontend
 
