@@ -8,6 +8,8 @@ import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import { ToastContainer, toast } from "react-toastify";
 import veilifyIcon from "./assets/veilify.jpeg";
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [image, setImage] = useState(null);
